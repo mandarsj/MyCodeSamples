@@ -1,6 +1,6 @@
 # MyCodeSamples
 
-The Project Contains Asp.Net Core Web API and MVC Web Application.
+The Project Contains Asp.Net Core Web API and MVC Core Web Application.
 
 Web API is protected using Oauth authentication with username password.
 
