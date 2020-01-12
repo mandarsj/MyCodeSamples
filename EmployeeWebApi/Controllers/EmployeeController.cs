@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using EmployeeWebApi.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -11,37 +12,48 @@ namespace EmployeeWebApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-
-        public EmployeesController()
+        private readonly EmployeeBL _employeeBL;
+        public EmployeesController(EmployeeBL employeeBL)
         {
-
+            _employeeBL = employeeBL;
         }
 
         // GET api/employees
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try { 
+            var employees = _employeeBL.GetEmployees();
+
+            if(employees.Count>0)
+            {
+                return Ok(employees);
+            }
+            else return NoContent();
+            }
+            catch(Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] Employee employee)
+        public ActionResult Post([FromBody] Employee employee)
         {
-            
+            try
+            { 
+            _employeeBL.PostEmployee(employee);
+
+            return Ok();
+            }
+            catch(Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

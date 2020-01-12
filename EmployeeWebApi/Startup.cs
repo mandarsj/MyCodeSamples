@@ -28,12 +28,14 @@ namespace EmployeeWebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            
+            AddServices(services);
         }
 
         private void AddServices(IServiceCollection services)
         {
-            services.AddSingleton<SqlConnection>(new SqlConnection(Configuration.GetConnectionString("SqlConnectonString")));
+            var sqlConnection = new SqlConnection(Configuration.GetConnectionString("SqlConnectonString"));
+            services.AddSingleton<SqlConnection>(sqlConnection);
+            services.AddSingleton(new EmployeeBL(sqlConnection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

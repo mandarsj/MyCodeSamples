@@ -7,7 +7,7 @@ namespace EmployeeWebApi.Entities
 {
     public class Employee
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
 
         public string FirstName { get; set; }
 
